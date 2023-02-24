@@ -49,7 +49,7 @@ class PokemonListViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.register(PokemonCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         
         view.addSubview(collectionView)
         
@@ -96,10 +96,14 @@ extension PokemonListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? PokemonCollectionViewCell else {
+            
+            return UICollectionViewCell()
+        }
         
-        if let _ = pokemons?[indexPath.item] {
-            cell.backgroundColor = .green
+        if let pokemon = pokemons?[indexPath.item] {
+            cell.backgroundColor = .green.withAlphaComponent(0.2)
+            cell.nameLabel.text = pokemon.name
         }
         
         return cell
