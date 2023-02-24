@@ -13,7 +13,7 @@ class AppCoordinator: Coordinator {
     private let apiClient = ApiClientURLSession()
     
     private lazy var startingCoordinator: Coordinator = {
-        return PokemonCoordinator(navigationController: navigationController, apiClient: apiClient)
+        return PokemonsCoordinator(navigationController: navigationController, apiClient: apiClient)
     }()
     
     init(window: UIWindow) {

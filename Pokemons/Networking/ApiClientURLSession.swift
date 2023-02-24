@@ -27,12 +27,7 @@ struct ApiClientURLSession: ApiClient {
             return
         }
         
-        var finalUrlString = finalUrl.absoluteString
-        if finalUrlString.hasSuffix("?") {
-            finalUrlString = finalUrlString.replacingOccurrences(of: "?", with: "")
-        }
-        
-        guard let request = request(withURL: URL(string: finalUrlString)!, method: method, headers: headers, parameters: parameters) else {
+        guard let request = request(withURL: finalUrl, method: method, headers: headers, parameters: parameters) else {
             completion(.failure(ApiClientError.invalidParameters))
             return
         }

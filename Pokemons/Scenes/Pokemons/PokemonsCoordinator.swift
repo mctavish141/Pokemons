@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PokemonCoordinator: Coordinator {
+class PokemonsCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let apiClient: ApiClient
     

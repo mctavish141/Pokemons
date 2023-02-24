@@ -10,5 +10,9 @@ struct PokemonDetails: Decodable {
     let name: String
     let height: Int
     let weight: Int
-    let sprites: Sprites
+    let sprites: PokemonSprites
+}
+
+struct PokemonSprites: Decodable {
+    let front_default: String
 }

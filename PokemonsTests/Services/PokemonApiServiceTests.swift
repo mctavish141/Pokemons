@@ -26,15 +26,15 @@ class PokemonApiServiceTests: XCTestCase {
     }
     
     func testPokemonsAreLoaded() {
-        var pokemonsList: PokemonList?
+        var pokemonList: PokemonList?
         var error: Error?
         
-        let expectation = expectation(description: "Get pokemons list")
+        let expectation = expectation(description: "Get pokemon list")
         
         service.getPokemons { result in
             switch result {
-            case .success(let resultPokemonsList):
-                pokemonsList = resultPokemonsList
+            case .success(let resultPokemonList):
+                pokemonList = resultPokemonList
             case .failure(let resultError):
                 error = resultError
             }
@@ -43,8 +43,8 @@ class PokemonApiServiceTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 15.0)
-        XCTAssertNotNil(pokemonsList, "Pokemons list should not be nil")
-        XCTAssertNil(error, "Erro should be nil")
+        XCTAssertNotNil(pokemonList, "Pokemon list should not be nil")
+        XCTAssertNil(error, "Error should be nil")
     }
     
     func testPokemonDetailsAreLoaded() {
@@ -73,7 +73,7 @@ class PokemonApiServiceTests: XCTestCase {
         var pokemonSpeices: PokemonSpecies?
         var error: Error?
         
-        let expectation = expectation(description: "Get pokemon details")
+        let expectation = expectation(description: "Get pokemon species")
         
         service.getPokemonSpecies(id: 1) { result in
             switch result {
@@ -87,8 +87,8 @@ class PokemonApiServiceTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 15.0)
-        XCTAssertNotNil(pokemonSpeices, "Pokemon details should not be nil")
-        XCTAssertNil(error, "Erro should be nil")
+        XCTAssertNotNil(pokemonSpeices, "Pokemon species should not be nil")
+        XCTAssertNil(error, "Error should be nil")
     }
 
 }
