@@ -17,6 +17,17 @@ class PokemonsCoordinator: Coordinator {
     }
     
     func start() {
+        // Create MVVM
+        let pokemonListViewController = PokemonListViewController()
+        let service = PokemonApiService(apiClient: apiClient)
+        let pokemonListViewModel = PokemonListViewModel(service: service, coordinatorDelegate: self, viewDelegate: pokemonListViewController)
+        pokemonListViewController.viewModel = pokemonListViewModel
         
+        // Push view controller
+        navigationController.pushViewController(pokemonListViewController, animated: true)
     }
+}
+
+extension PokemonsCoordinator: PokemonListViewModelCoordinatorDelegate {
+    
 }
