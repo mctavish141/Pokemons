@@ -104,6 +104,18 @@ extension PokemonListViewController: UICollectionViewDataSource {
         if let pokemon = pokemons?[indexPath.item] {
             cell.backgroundColor = .green.withAlphaComponent(0.2)
             cell.nameLabel.text = pokemon.name
+            
+            cell.pictureView.image = nil
+            viewModel.pokemonImage(forItem: indexPath.item) { imageData in
+                DispatchQueue.main.async {
+                    if let imageData = imageData,
+                       let image = UIImage(data: imageData),
+                       let cell = collectionView.cellForItem(at: indexPath) as? PokemonCollectionViewCell {
+                        
+                        cell.pictureView.image = image
+                    }
+                }
+            }
         }
         
         return cell

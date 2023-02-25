@@ -9,6 +9,12 @@ import UIKit
 
 class PokemonCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
+    let pictureView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,5 +38,12 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         
         nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
+        contentView.addSubview(pictureView)
+        
+        pictureView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        pictureView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        pictureView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        pictureView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
 }

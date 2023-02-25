@@ -5,6 +5,8 @@
 //  Created by Serhii Kopach on 24.02.2023.
 //
 
+import Foundation
+
 class PokemonApiService: PokemonService {
     private let apiClient: ApiClient
     
@@ -33,5 +35,21 @@ class PokemonApiService: PokemonService {
         let responseType = PokemonSpecies.self
         
         apiClient.makeRequest(url: url, method: method, responseType: responseType, completion: completion)
+    }
+    
+    func getPokemonImage(url: String, completion: @escaping (Result<Data, Error>) -> ()) {
+        DispatchQueue.global(qos: .utility).async {
+            guard let url = URL(string: url) else {
+                completion(.failure(ApiClientError.invalidURL))
+                return
+            }
+            
+            guard let data = try? Data(contentsOf: url) else {
+                completion(.failure(ApiClientError.invalidURL))
+                return
+            }
+            
+            completion(.success(data))
+        }
     }
 }
