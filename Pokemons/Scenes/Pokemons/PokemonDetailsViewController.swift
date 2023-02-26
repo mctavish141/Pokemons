@@ -22,6 +22,7 @@ class PokemonDetailsViewController: UIViewController {
     private static let descriptionLabelFontSize = 20.0
     private static let heightLabelFontSize = 20.0
     private static let weightabelFontSize = 20.0
+    private let pictureViewAspectRatio = 0.25
     
     private let containerView: UIView = {
         let view = UIView()
@@ -104,7 +105,7 @@ class PokemonDetailsViewController: UIViewController {
         // Picture view
         containerView.addSubview(pictureView)
         
-        pictureView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.25)
+        pictureView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: pictureViewAspectRatio)
             .isActive = true
         
         // Description label
