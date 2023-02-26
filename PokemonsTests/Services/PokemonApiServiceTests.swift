@@ -25,13 +25,35 @@ class PokemonApiServiceTests: XCTestCase {
         service = nil
     }
     
-    func testPokemonsAreLoaded() {
+    func testInitialPokemonsAreLoaded() {
         var pokemonList: PokemonList?
         var error: Error?
         
         let expectation = expectation(description: "Get pokemon list")
         
-        service.getPokemons { result in
+        service.getPokemons(url: nil) { result in
+            switch result {
+            case .success(let resultPokemonList):
+                pokemonList = resultPokemonList
+            case .failure(let resultError):
+                error = resultError
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 15.0)
+        XCTAssertNotNil(pokemonList, "Pokemon list should not be nil")
+        XCTAssertNil(error, "Error should be nil")
+    }
+    
+    func testNextPokemonsAreLoaded() {
+        var pokemonList: PokemonList?
+        var error: Error?
+        
+        let expectation = expectation(description: "Get pokemon list")
+        
+        service.getPokemons(url: "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20") { result in
             switch result {
             case .success(let resultPokemonList):
                 pokemonList = resultPokemonList
@@ -88,6 +110,29 @@ class PokemonApiServiceTests: XCTestCase {
         
         wait(for: [expectation], timeout: 15.0)
         XCTAssertNotNil(pokemonSpeices, "Pokemon species should not be nil")
+        XCTAssertNil(error, "Error should be nil")
+    }
+    
+    func testPokemonImageIsLoaded() {
+        var pokemonImage: Data?
+        var error: Error?
+        
+        let expectation = expectation(description: "Get pokemon image")
+        
+        service.getPokemonImage(url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png") { result in
+            
+            switch result {
+            case .success(let resultPokemonImage):
+                pokemonImage = resultPokemonImage
+            case .failure(let resultError):
+                error = resultError
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 15.0)
+        XCTAssertNotNil(pokemonImage, "Pokemon image should not be nil")
         XCTAssertNil(error, "Error should be nil")
     }
 
