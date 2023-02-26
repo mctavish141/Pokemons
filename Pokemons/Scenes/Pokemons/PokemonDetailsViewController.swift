@@ -93,6 +93,9 @@ class PokemonDetailsViewController: UIViewController {
     }
     
     private func setupViews() {
+        // View
+        view.backgroundColor = .systemBackground
+        
         // Container view
         view.addSubview(containerView)
         
