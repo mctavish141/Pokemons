@@ -21,7 +21,8 @@ class PokemonListViewController: UIViewController {
     private let bottomMargin = 10.0
     private let intercellMargin = 10.0
     private let itemsPerRow = 2
-    private let aspectRatio = 1.5
+    private let itemAspectRatio = 1.5
+    private let colorBackgroundViewColor = UIColor(red: 245.0/256.0, green: 244.0/256.0, blue: 227.0/256.0, alpha: 0.95)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class PokemonListViewController: UIViewController {
         
         let itemSize = itemSize()
         layout.itemSize = itemSize
-        layout.estimatedItemSize = itemSize
+        layout.estimatedItemSize = .zero
         
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         
@@ -67,7 +68,7 @@ class PokemonListViewController: UIViewController {
         let intercellMargins = intercellMargin * Double(itemsPerRow - 1)
         let contentWidth = screenWidth - sideMargins - intercellMargins
         let itemWidth = (itemsPerRow > 0) ? contentWidth / Double(itemsPerRow) : contentWidth
-        let itemHeight = itemWidth / aspectRatio
+        let itemHeight = itemWidth / itemAspectRatio
         
         return CGSize(width: itemWidth, height: itemHeight)
     }
@@ -102,7 +103,7 @@ extension PokemonListViewController: UICollectionViewDataSource {
         }
         
         if let pokemon = pokemons?[indexPath.item] {
-            cell.backgroundColor = .green.withAlphaComponent(0.2)
+            cell.colorBackgroundView.backgroundColor = colorBackgroundViewColor
             cell.nameLabel.text = pokemon.name
             
             cell.pictureView.image = nil
@@ -125,6 +126,13 @@ extension PokemonListViewController: UICollectionViewDataSource {
 extension PokemonListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
+
+extension PokemonListViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return itemSize()
     }
 }
 

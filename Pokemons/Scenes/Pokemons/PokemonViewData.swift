@@ -16,5 +16,5 @@ struct PokemonViewData: PokemonViewDataType {
         self.pokemon = pokemon
     }
     
-    var name: String { return pokemon.name }
+    var name: String { return pokemon.name.capitalized }
 }
