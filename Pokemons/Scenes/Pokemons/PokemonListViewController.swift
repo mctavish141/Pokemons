@@ -117,6 +117,13 @@ extension PokemonListViewController: UICollectionViewDelegate {
         
         viewModel.itemSelected(indexPath.item)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if indexPath.item == ((pokemons?.count ?? 0) - 1) {
+            viewModel.loadPokemons()
+        }
+    }
 }
 
 extension PokemonListViewController: UICollectionViewDelegateFlowLayout {
@@ -128,7 +135,7 @@ extension PokemonListViewController: UICollectionViewDelegateFlowLayout {
 
 extension PokemonListViewController: PokemonListViewModelViewDelegate {
     func update(withPokemons pokemons: [PokemonViewDataType]) {
-        self.pokemons = pokemons
+        self.pokemons = (self.pokemons ?? []) + pokemons
         collectionView.reloadData()
     }
     

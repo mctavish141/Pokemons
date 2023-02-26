@@ -14,12 +14,12 @@ class PokemonApiService: PokemonService {
         self.apiClient = apiClient
     }
     
-    func getPokemons(completion: @escaping (Result<PokemonList, Error>) -> ()) {
-        let url = Endpoint.pokemons.fullPath()
+    func getPokemons(url: String?, completion: @escaping (Result<PokemonList, Error>) -> ()) {
+        let requestUrl = url ?? Endpoint.pokemons.fullPath()
         let method = NetworkRequestMethod.get
         let responseType = PokemonList.self
         
-        apiClient.makeRequest(url: url, method: method, responseType: responseType, completion: completion)
+        apiClient.makeRequest(url: requestUrl, method: method, responseType: responseType, completion: completion)
     }
     
     func getPokemonDetails(url: String, completion: @escaping (Result<PokemonDetails, Error>) -> ()) {

@@ -17,13 +17,8 @@ struct ApiClientURLSession: ApiClient {
                         responseType: T.Type,
                         completion: @escaping (Result<T, Error>) -> ()) where T : Decodable {
         
-        guard let urlComponents = urlComponents(withURL: url, parameters: parameters) else {
+        guard let finalUrl = finalUrl(withURL: url, method: method, parameters: parameters) else {
             completion(.failure(ApiClientError.invalidURL))
-            return
-        }
-        
-        guard let finalUrl = urlComponents.url else {
-            completion(.failure(ApiClientError.invalidParameters))
             return
         }
         
@@ -50,7 +45,20 @@ struct ApiClientURLSession: ApiClient {
     
     // MARK: - Private methods
     
-    private func urlComponents(withURL url: String, parameters: [String : Any]?) -> URLComponents? {
+    private func finalUrl(withURL url: String, method: NetworkRequestMethod, parameters: [String : Any]?) -> URL? {
+        
+        if let parameters = parameters,
+           parameters.count > 0,
+           method == .get {
+            
+            return urlComponents(withURL: url, parameters: parameters)?.url
+            
+        } else {
+            return URL(string: url)
+        }
+    }
+    
+    private func urlComponents(withURL url: String, parameters: [String : Any]) -> URLComponents? {
         guard var urlComponents = URLComponents(string: url) else {
             return nil
         }
@@ -60,17 +68,15 @@ struct ApiClientURLSession: ApiClient {
         return urlComponents
     }
     
-    private func queryItems(from parameters: [String: Any]?) -> [URLQueryItem]? {
+    private func queryItems(from parameters: [String: Any]) -> [URLQueryItem]? {
         var queryItems: [URLQueryItem] = []
         
-        if let parameters = parameters {
-            for (key, value) in parameters {
-                guard let value = value as? CustomStringConvertible else {
-                    return nil
-                }
-                
-                queryItems.append(URLQueryItem(name: key, value: value.description))
+        for (key, value) in parameters {
+            guard let value = value as? CustomStringConvertible else {
+                return nil
             }
+            
+            queryItems.append(URLQueryItem(name: key, value: value.description))
         }
         
         return queryItems

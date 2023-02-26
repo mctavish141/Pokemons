@@ -6,6 +6,7 @@
 //
 
 struct PokemonList: Decodable {
+    let next: String?
     let results: [Pokemon]
 }
 

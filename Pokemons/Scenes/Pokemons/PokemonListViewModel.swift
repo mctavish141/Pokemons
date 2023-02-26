@@ -39,6 +39,7 @@ class PokemonListViewModel: PokemonListViewModelType {
     
     // MARK: - Properties
     private let imageFetcher: PokemonImageFetcherType
+    private var nextRequestUrl: String?
     
     // MARK: - Protocol methods
     required init(service: PokemonService, coordinatorDelegate: PokemonListViewModelCoordinatorDelegate?, viewDelegate: PokemonListViewModelViewDelegate?) {
@@ -50,11 +51,16 @@ class PokemonListViewModel: PokemonListViewModelType {
     }
     
     func loadPokemons() {
-        service.getPokemons { [weak self] result in
+        guard (pokemons == nil) || (nextRequestUrl != nil) else {
+            return
+        }
+        
+        service.getPokemons(url: nextRequestUrl) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let pokemonList):
-                    self?.pokemons = pokemonList.results
+                    self?.pokemons = (self?.pokemons ?? []) + pokemonList.results
+                    self?.nextRequestUrl = pokemonList.next
                     self?.viewDelegate?.update(withPokemons: pokemonList.results.map { PokemonViewData(pokemon: $0) })
                 case .failure(let error):
                     self?.viewDelegate?.update(withError: error.localizedDescription)
