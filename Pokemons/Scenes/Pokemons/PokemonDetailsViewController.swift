@@ -52,6 +52,7 @@ class PokemonDetailsViewController: UIViewController {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.textAlignment = .justified
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: descriptionLabelFontSize)
         label.translatesAutoresizingMaskIntoConstraints = false

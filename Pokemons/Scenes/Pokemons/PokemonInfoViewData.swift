@@ -20,7 +20,18 @@ struct PokemonInfoViewData: PokemonInfoViewDataType {
     }
     
     var name: String { return pokemonInfo.details.name.capitalized }
+    
     var height: String { return String(pokemonInfo.details.height) }
+    
     var weight: String { return String(pokemonInfo.details.weight) }
-    var description: String { return pokemonInfo.species.flavor_text_entries.first?.flavor_text ?? "" }
+    
+    var description: String { return pokemonInfo.species.flavor_text_entries.first?.flavor_text.replacingLineBreaksWithSpaces() ?? "" }
+}
+
+fileprivate extension String {
+    func replacingLineBreaksWithSpaces() -> String {
+        return self
+            .replacingOccurrences(of: "\n", with: " ")
+            .replacingOccurrences(of: "\u{000C}", with: " ")
+    }
 }
