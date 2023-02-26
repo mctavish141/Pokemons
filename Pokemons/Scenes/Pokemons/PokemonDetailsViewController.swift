@@ -80,9 +80,14 @@ class PokemonDetailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        setupContent(hidden: true)
         setupViews()
         viewModel.loadPokemonInfo()
         loadImage()
+    }
+    
+    private func setupContent(hidden: Bool) {
+        containerView.alpha = hidden ? 0.0 : 1.0
     }
     
     private func setupViews() {
@@ -156,6 +161,7 @@ extension PokemonDetailsViewController: PokemonDetailsViewModelViewDelegate {
     func update(withPokemonInfo pokemonInfo: PokemonInfoViewDataType) {
         self.pokemonInfo = pokemonInfo
         updateData()
+        setupContent(hidden: false)
     }
     
     func update(withPokemonImage pokemonImage: Data) {
