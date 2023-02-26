@@ -11,8 +11,8 @@ class PokemonCollectionViewCell: UICollectionViewCell {
     // MARK: - Private properties
     private let stackViewMargin = 10.0
     private let nameLabelHeight = 20.0
-    private static let nameLabelFontSize = 20.0
     private static let colorBackgroundViewCornerRadius = 10.0
+    private static let nameLabelFontSize = 20.0
     
     // MARK: - Public properties
     let colorBackgroundView: UIView = {

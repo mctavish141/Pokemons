@@ -20,7 +20,6 @@ protocol PokemonDetailsViewModelCoordinatorDelegate: AnyObject {
 
 protocol PokemonDetailsViewModelViewDelegate: AnyObject {
     func update(withPokemonInfo pokemonInfo: PokemonInfoViewDataType)
-    func update(withPokemonImage pokemonImage: Data)
     func update(withError error: String)
 }
 

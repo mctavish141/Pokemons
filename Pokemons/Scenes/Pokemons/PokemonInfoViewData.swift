@@ -19,7 +19,7 @@ struct PokemonInfoViewData: PokemonInfoViewDataType {
         self.pokemonInfo = pokemonInfo
     }
     
-    var name: String { return pokemonInfo.details.name }
+    var name: String { return pokemonInfo.details.name.capitalized }
     var height: String { return String(pokemonInfo.details.height) }
     var weight: String { return String(pokemonInfo.details.weight) }
     var description: String { return pokemonInfo.species.flavor_text_entries.first?.flavor_text ?? "" }
