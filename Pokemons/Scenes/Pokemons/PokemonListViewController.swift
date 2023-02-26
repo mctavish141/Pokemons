@@ -72,18 +72,6 @@ class PokemonListViewController: UIViewController {
         
         return CGSize(width: itemWidth, height: itemHeight)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension PokemonListViewController: UICollectionViewDataSource {
@@ -126,6 +114,8 @@ extension PokemonListViewController: UICollectionViewDataSource {
 extension PokemonListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        
+        viewModel.itemSelected(indexPath.item)
     }
 }
 

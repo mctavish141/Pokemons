@@ -8,26 +8,41 @@
 import UIKit
 
 class PokemonDetailsViewController: UIViewController {
+    
+    // MARK: - View model
+    var viewModel: PokemonDetailsViewModelType!
+    
+    // MARK: - Properties
+    private var pokemonInfo: PokemonInfoViewDataType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        viewModel.loadPokemonInfo()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupViewController() {
+        setupNavigationItem()
     }
-    */
-
+    
+    private func setupNavigationItem() {
+        navigationItem.title = pokemonInfo?.name
+    }
 }
 
 extension PokemonDetailsViewController: PokemonDetailsViewModelViewDelegate {
+    func update(withPokemonInfo pokemonInfo: PokemonInfoViewDataType) {
+        self.pokemonInfo = pokemonInfo
+        setupViewController()
+    }
     
+    func update(withPokemonImage pokemonImage: Data) {
+        
+    }
+    
+    func update(withError error: String) {
+        
+    }
 }

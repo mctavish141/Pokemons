@@ -17,17 +17,38 @@ class PokemonsCoordinator: Coordinator {
     }
     
     func start() {
+        showPokemonListViewController()
+    }
+    
+    private func showPokemonListViewController() {
         // Create MVVM
-        let pokemonListViewController = PokemonListViewController()
+        let viewController = PokemonListViewController()
         let service = PokemonApiService(apiClient: apiClient)
-        let pokemonListViewModel = PokemonListViewModel(service: service, coordinatorDelegate: self, viewDelegate: pokemonListViewController)
-        pokemonListViewController.viewModel = pokemonListViewModel
+        let viewModel = PokemonListViewModel(service: service, coordinatorDelegate: self, viewDelegate: viewController)
+        viewController.viewModel = viewModel
         
         // Push view controller
-        navigationController.pushViewController(pokemonListViewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func showPokemonDetailsViewController(pokemon: Pokemon, imageFetcher: PokemonImageFetcherType) {
+        // Create MVVM
+        let viewController = PokemonDetailsViewController()
+        let service = PokemonApiService(apiClient: apiClient)
+        let viewModel = PokemonDetailsViewModel(pokemon: pokemon, service: service, imageFetcher: imageFetcher, coordinatorDelegate: self, viewDelegate: viewController)
+        viewController.viewModel = viewModel
+        
+        // Push view controller
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
 extension PokemonsCoordinator: PokemonListViewModelCoordinatorDelegate {
+    func pokemonSelected(_ pokemon: Pokemon, imageFetcher: PokemonImageFetcherType) {
+        showPokemonDetailsViewController(pokemon: pokemon, imageFetcher: imageFetcher)
+    }
+}
+
+extension PokemonsCoordinator: PokemonDetailsViewModelCoordinatorDelegate {
     
 }

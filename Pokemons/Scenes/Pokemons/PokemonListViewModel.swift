@@ -14,10 +14,11 @@ protocol PokemonListViewModelType {
     func pokemonsCount() -> Int
     func pokemon(forItem item: Int) -> PokemonViewDataType?
     func pokemonImage(forItem item: Int, completion: @escaping (Data?) -> ())
+    func itemSelected(_ item: Int)
 }
 
 protocol PokemonListViewModelCoordinatorDelegate: AnyObject {
-    
+    func pokemonSelected(_ pokemon: Pokemon, imageFetcher: PokemonImageFetcherType)
 }
 
 protocol PokemonListViewModelViewDelegate: AnyObject {
@@ -79,5 +80,13 @@ class PokemonListViewModel: PokemonListViewModelType {
         }
         
         imageFetcher.fetchPokemonImage(forPokemon: pokemon, completion: completion)
+    }
+    
+    func itemSelected(_ item: Int) {
+        guard let pokemon = pokemons?[item] else {
+            return
+        }
+        
+        coordinatorDelegate?.pokemonSelected(pokemon, imageFetcher: imageFetcher)
     }
 }
