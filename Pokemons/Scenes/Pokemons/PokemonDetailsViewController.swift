@@ -15,6 +15,7 @@ class PokemonDetailsViewController: UIViewController {
     // MARK: - Properties
     private var pokemonInfo: PokemonInfoViewDataType?
     private var pokemonImage: UIImage?
+    private let containerViewMargin = 10.0
     private let stackViewMargin = 10.0
     private static let containerViewCornerRadius = 10.0
     private static let containerViewColor = UIColor(red: 245.0/256.0, green: 244.0/256.0, blue: 227.0/256.0, alpha: 0.95)
@@ -99,11 +100,11 @@ class PokemonDetailsViewController: UIViewController {
         // Container view
         view.addSubview(containerView)
         
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: containerViewMargin)
             .isActive = true
-        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor)
+        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: containerViewMargin)
             .isActive = true
-        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -containerViewMargin)
             .isActive = true
         
         // Picture view
